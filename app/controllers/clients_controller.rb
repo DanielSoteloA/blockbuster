@@ -3,7 +3,8 @@ class ClientsController < ApplicationController
 
   # GET /clients or /clients.json
   def index
-    @clients = Client.all
+    #@clients = Client.all
+    @clients = Client.all.order(id: :asc)
   end
 
   # GET /clients/1 or /clients/1.json
@@ -46,7 +47,7 @@ class ClientsController < ApplicationController
       end
     end
   end
-
+  
   # DELETE /clients/1 or /clients/1.json
   def destroy
     @client.destroy
@@ -65,6 +66,6 @@ class ClientsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def client_params
-      params.require(:client).permit(:name, :age)
+      params.require(:client).permit(:name, :age, :movie_id)
     end
 end
