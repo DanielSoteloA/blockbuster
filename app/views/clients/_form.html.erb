@@ -11,17 +11,31 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  
+  <div class="row">
+    <div class="row justify-content-md-center">
+      <div class="col">
+        <%= form.label :name, style: "display: block" %>
+        <%= form.text_field :name, { class: "form-control mb-2 mr-sm-2" } %>
+      </div>
+
+      <div class="col">
+        <%= form.label :age, style: "display: block" %>
+        <%= form.text_field :age, { class: "form-control mb-2 mr-sm-2" } %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row">
+    <div class="row justify-content-md-center">
+      <div class="col">
+        <%= form.label :movie_id, "Movie", style: "display: block", class: "form-label" %>
+        <%= form.collection_select :movie_id, Movie.all.order(name: :asc), :id, :name, { prompt: "Seleccione Pelicula" }, { class: "form-control mb-2 mr-sm-2" } %>
+      </div>
+    </div>
   </div>
 
   <div>
-    <%= form.label :age, style: "display: block" %>
-    <%= form.text_field :age %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit :class => 'btn btn-primary' %>
   </div>
 <% end %>
