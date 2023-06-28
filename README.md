@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Desafío - Relaciones 1 a N en los modelos
 
-Things you may want to cover:
+* Daniel Sotelo A.
 
-* Ruby version
+    - Modificación Apoyo desafio
 
-* System dependencies
+    - Se Modifica relaciones iniciales en client.rb y movie.rb
+    
+![Descripción de la imagen](app/assets/images/relacion.jpg "relacion 1 a N")
 
-* Configuration
+    - El proyecto muestra el arriendo de peliculas por cliente
 
-* Database creation
+    - Donde el cliente solo puede efectuar un solo arriendo
+        - Se utiliza boton Devolver pelicula antes de efectuar nvo. arriendo
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    - Y una pelicula (id) no puede ser arrendada por mas de un cliente
+        - se utiliza query Movie.left_joins(:clients).where(clients: {movie_id: nil}).order(name: :asc)
+        * para no listar peliculas ya arrendadas
+    
