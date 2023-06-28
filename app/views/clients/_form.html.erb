@@ -15,12 +15,12 @@
   <div class="row">
     <div class="row justify-content-md-center">
       <div class="col">
-        <%= form.label :name, style: "display: block" %>
+        <%= form.label :Nombre, style: "display: block" %>
         <%= form.text_field :name, { class: "form-control mb-2 mr-sm-2" } %>
       </div>
 
       <div class="col">
-        <%= form.label :age, style: "display: block" %>
+        <%= form.label :Edad, style: "display: block" %>
         <%= form.text_field :age, { class: "form-control mb-2 mr-sm-2" } %>
       </div>
     </div>
@@ -29,13 +29,35 @@
   <div class="row">
     <div class="row justify-content-md-center">
       <div class="col">
-        <%= form.label :movie_id, "Movie", style: "display: block", class: "form-label" %>
-        <%= form.collection_select :movie_id, Movie.all.order(name: :asc), :id, :name, { prompt: "Seleccione Pelicula" }, { class: "form-control mb-2 mr-sm-2" } %>
+        <% #Si cliente No tiene una pelicula arrendada %>
+        <% #consultamos que peliculas estan arrendadas, para no colocarlas como opcion de arriendo en el select %>
+        <% if (@client.movie_id.nil?) %>
+          <%= form.label :movie_id, "Arrendar Pelicula", style: "display: block", class: "form-label" %>
+          <%= form.collection_select :movie_id, Movie.left_joins(:clients).where(clients: {movie_id: nil}).order(name: :asc), :id, :name, { prompt: "Seleccione Pelicula" }, { class: "form-control mb-2 mr-sm-2" } %>
+        <% else %>
+        <% #Si cliente tiene una pelicula arrendada debe devolver la pelicula previamente %>
+          <%= form.label :movie_id, "En Arriendo", style: "display: block", class: "form-label" %>
+          <%= form.collection_select :movie_id, Movie.all.order(name: :asc), :id, :name, { prompt: "Seleccione Pelicula" }, { class: "form-control mb-2 mr-sm-2", :disabled => "disabled" } %>
+        <% end %>
       </div>
     </div>
   </div>
 
+  <% if (@client.movie_id.nil?) %>
   <div>
-    <%= form.submit :class => 'btn btn-primary' %>
+    <%= form.submit "Modificar Datos y Arrendar", :class => 'btn btn-primary' %>
   </div>
+  <% end %>
+<% end %>
+
+<%= form_with(model: client) do |form| %>
+  <% #Form devolucion pelicula se le asigna valor nil a movie_id en Cliente %>
+  <% if (!@client.movie_id.nil?) %>
+  <div>
+    <%= form.hidden_field :name %>
+    <%= form.hidden_field :age %>
+    <%= form.hidden_field :movie_id, :value=>[nil,""] %>
+    <%= form.submit "Devolver Pelicula", :class => 'btn btn-primary' %>
+  </div>
+  <% end %>
 <% end %>
