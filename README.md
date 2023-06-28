@@ -4,18 +4,20 @@
 
 * Daniel Sotelo A.
 
-    - Modificación Apoyo desafio
+    - Se utiliza como base "Apoyo desafio"
+
+* Proceso
 
     - Se Modifica relaciones iniciales en client.rb y movie.rb
     
 ![Descripción de la imagen](app/assets/images/relacion.jpg "relacion 1 a N")
 
-    - El proyecto muestra el arriendo de peliculas por cliente
+    - Se muestra el arriendo de peliculas por cliente
 
-    - Donde el cliente solo puede efectuar un solo arriendo
-        - Se utiliza boton Devolver pelicula antes de efectuar nvo. arriendo
+    - Se establece que el cliente solo puede efectuar un solo arriendo
+        - Se utiliza boton "Devolver pelicula" antes de efectuar nvo. arriendo
 
-    - Y una pelicula (id) no puede ser arrendada por mas de un cliente
-        - se utiliza query Movie.left_joins(:clients).where(clients: {movie_id: nil}).order(name: :asc)
-        * para no listar peliculas ya arrendadas
+    - Una pelicula[id] no puede ser arrendada por mas de un cliente
+        - se utiliza un JOIN " Movie.left_joins(:clients).where(clients: {movie_id: nil}).order(name: :asc) "
+        - para no listar peliculas ya arrendadas y solo mostrar las no asignadas a un cliente
     
